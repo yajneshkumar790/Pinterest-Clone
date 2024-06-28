@@ -26,7 +26,9 @@ router.get('/feed', function(req, res, next) {
 router.get('/profile', isLoggedIn, async function(req, res, next) {
   const user = await userModel.findOne({
     username: req.user.username
-  }); 
+  })
+  .populate("posts");
+  console.log(user);
   res.render("profile", {user});
 });
 
@@ -38,7 +40,7 @@ router.get('/logout', function(req,res){
 });
 
 router.get('/forgot', (req,res) => {
-  res.send("forgoy");
+  res.send("forgot");
 });
 
 
@@ -60,11 +62,21 @@ router.post('/login', Passport.authenticate('local',{
   failureFlash: true // will show flash message when the login failed
 }), function (req,res) {});
 
-router.post('/upload', upload.single('file'), (req,res) => {
+router.post('/upload', isLoggedIn, upload.single('file'), async (req,res) => {
   if(!req.file) {
-    return res.status(400).send('No files were uploaded');
+    return res.status(400).render('/profile');
   }
-  res.send('File uploaded successfully');
+  const user = await userModel.findOne({
+    username: req.user.username
+  });
+  const post = await postModel.create({
+    image: req.file.filename,
+    imageText: req.body.filecaption,
+    user: user._id
+  });
+  user.posts.push(post._id);
+  await user.save();
+  res.redirect('/profile');
 });
 
 function isLoggedIn(req,res,next) {
