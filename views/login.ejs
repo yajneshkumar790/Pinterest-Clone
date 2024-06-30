@@ -1,16 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/stylesheets/style.css">
-  <title>Pinterest-Clone</title>
-</head>
-<body>
-  <div class="container">
+<%- include('./partials/header') %>
+
+<div class="w-full h-screen bg-zinc-300 flex items-center justify-center">
+  <div class="w-[70vh] h-[68vh] bg-zinc-100 px-4 py-5 rounded-[30px]">
     <div class="content">
       <!--pinterest logo-->
-      <img src="https://i.pinimg.com/originals/d3/d1/75/d3d175e560ae133f1ed5cd4ec173751a.png" alt="pin logo" class="img1" />
+      <div style="display: flex; justify-content: center;"><img src="https://i.pinimg.com/originals/d3/d1/75/d3d175e560ae133f1ed5cd4ec173751a.png" alt="pin logo" class="img1" /></div>
       <p class="header">Login here</p>
 
       <% if(locals.error) {%>
@@ -23,7 +17,6 @@
         <input type="submit" class="btn int" value="Login">
       </form>
 
-      <a href="/forgot">Forgot password?</a>
 
       
 
@@ -33,11 +26,13 @@
           <b>Terms of Service, Privacy policy.</b>
         </p>
         <hr />
-        <a href="/">Not on Pinterest yet? Sign up</a>
+        <a style="text-decoration: none;" href="/">Not on Pinterest yet? <strong>Sign up</strong></a>
       </footer>
     </div>
   </div>
-  <a href="/" class="upbtn">Sign up</a>
+  <!-- <a href="/" class="upbtn">Sign up</a> -->
+</div>
 
-</body>
-</html>
+
+
+<%- include("./partials/footer.ejs") %>

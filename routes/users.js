@@ -17,7 +17,11 @@ const userSchema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Post' 
   }],
-  dp: {
+  boards: {
+    type: Array,
+    default: []
+  },
+  profileImage: {
     type: String,  // URL to the display picture
   },
   email: {
@@ -33,7 +37,7 @@ const userSchema = new Schema({
   timestamps: true  // Automatically creates `createdAt` and `updatedAt` fields
 });
 
-userSchema.plugin(plm);
+userSchema.plugin(plm);  // plm - passport local mongoose
 
 
 module.exports = mongoose.model('User', userSchema);

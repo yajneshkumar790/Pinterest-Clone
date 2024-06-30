@@ -28,14 +28,14 @@ router.get('/profile', isLoggedIn, async function(req, res, next) {
     username: req.user.username
   })
   .populate("posts");
-  console.log(user);
+  // console.log(user);
   res.render("profile", {user});
 });
 
 router.get('/logout', function(req,res){
   req.logout(function(err){
     if(err) { return next(err); }
-    res.redirect('/');
+    res.redirect('/login');
   });
 });
 
@@ -45,8 +45,12 @@ router.get('/forgot', (req,res) => {
 
 
 router.post('/register', function(req, res) {
-  const { username, email, fullname } = req.body;
-  const userData = new userModel({ username, email, fullname }); 
+  // const { username, email, fullname } = req.body;
+  const userData = new userModel({ 
+    username: req.body.username,
+    email: req.body.email,
+    fullname: req.body.fullname,
+  }); 
 
   userModel.register(userData, req.body.password)
     .then(function() {
