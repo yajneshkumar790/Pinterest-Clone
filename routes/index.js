@@ -23,9 +23,6 @@ router.get('/login', async function(req, res, next) {
   res.render('login', { error: req.flash('error'), nav: false});
 });
 
-router.get('/feed', function(req, res, next) {
-  res.render('feed', { nav: true });
-});
 
 router.get('/profile', isLoggedIn, async function(req, res, next) {
   const user = await userModel.findOne({
@@ -42,6 +39,14 @@ router.get('/show/posts', isLoggedIn, async function(req, res, next) {
   .populate("posts");
   res.render("show", {user, nav: true});
 });
+
+router.get('/feed', isLoggedIn, async function(req, res, next) {
+  const user = await userModel.findOne({username: req.user.username});
+  const posts = await postModel.find()
+  .populate("user");
+  res.render("feed", {user, posts, nav: true});
+});
+
 router.get('/add', isLoggedIn, async function(req, res, next) {
   const user = await userModel.findOne({
     username: req.user.username
