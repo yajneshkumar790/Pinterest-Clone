@@ -5,14 +5,8 @@ const plm = require('passport-local-mongoose');
 mongoose.connect("mongodb://127.0.0.1:27017/Pinterest-Clone-db")
 
 const userSchema = new Schema({
-  username: {
-    type: String,
-    required: true,
-    unique: true
-  },
-  password: {
-    type: String,
-  },
+  username: String,
+  password: String,
   posts: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Post' 
@@ -21,18 +15,13 @@ const userSchema = new Schema({
     type: Array,
     default: []
   },
-  profileImage: {
-    type: String,  // URL to the display picture
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true
-  },
+  profileImage: String, // URL to display profile image
+  email: String,
   fullname: {
     type: String,
     required: true
-  }
+  },
+  contact: Number
 }, {
   timestamps: true  // Automatically creates `createdAt` and `updatedAt` fields
 });
