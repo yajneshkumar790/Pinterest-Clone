@@ -23,7 +23,6 @@ router.get('/login', async function(req, res, next) {
   res.render('login', { error: req.flash('error'), nav: false});
 });
 
-
 router.get('/profile', isLoggedIn, async function(req, res, next) {
   const user = await userModel.findOne({
     username: req.user.username
